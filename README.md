@@ -16,10 +16,10 @@ I use particle indexing in the follwing manner:
 so that every particle index times 2 then plus 1 or 2 will give the index of its daughter particle
 
 # Assumptions:
-1 . The script assumes conservation of energy and momentum. And because the masses of particles are very small compared to the total 
-energy, the momentum is set to equal to the energy, zero particle has energy 1.\n
+1.The script assumes conservation of energy and momentum. And because the masses of particles are very small compared to the total 
+energy, the momentum is set to equal to the energy, zero particle has energy 1.
 
-2. This script is a over simplified simulation and it assumes all particle being produced are the same type
+2.This script is a over simplified simulation and it assumes all particle being produced are the same type.
 
 # Saving part
 In the MC_saving.py script, make sure that you have installed astropy package in order for it to work, here is a quick way to install it
