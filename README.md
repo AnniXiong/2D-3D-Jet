@@ -20,5 +20,10 @@ so that every particle index times 2 then plus 1 or 2 will give the index of its
 energy, the momentum is set to equal to the energy, zero particle has energy 1.
 2. This script is a over simplified simulation and it assumes all particle being produced are the same type
 
-In the saving script, the two data files for 2D and 3D version will be created in your current directory and note that for the 3D
+# Saving part
+In the MC_saving.py script, make sure that you have installed astropy package in order for it to work, here is a quick way to install it
+
+pip install --no-deps astropy
+
+the two data files for 2D and 3D version will be created in your current directory and note that for the 3D
 version, 2 angles are put in one column, first corresponds to thata and the second phi in the spherical coordinate.
