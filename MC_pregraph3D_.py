@@ -4,7 +4,6 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-import math
 import collections
 
 startE = 1 # the starting enrgy of 0 particle
@@ -57,9 +56,9 @@ def main():
 		Thetatemporary = thetaTemp
 	
 		
-		#print (Zd, 'length :', len(Zd))
-		#print (Thetad, 'length :', len(Thetad))
-	print('momentum', momentum)
+	print ("Total energy3d", Zd, 'length :', len(Zd))
+	print ("Theta & phi", Thetad, 'length :', len(Thetad))
+	print('momentum xyz', momentum)
 
 """ this function should return the randomly generated Z values in a list according to what n is """
 def get_random_Z (vn):
@@ -144,7 +143,7 @@ def vertexTheta2 (Pcomponent, theta_list, Thetatemporary, sec_angle):
 			theta = theta_list[k]
 		elif k%2 == 0:
 			Pcomponentxy = Pcomponent[k]
-			theta = math.atan(Pcomponentxy[1]/Pcomponentxy[0])
+			theta = np.arctan(Pcomponentxy[1]/Pcomponentxy[0])
 			Thetat[k] = theta 
 		Thetat[k] = [theta,phi]
 	return Thetat

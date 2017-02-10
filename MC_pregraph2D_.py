@@ -1,16 +1,12 @@
 # Anni Xiong
 #
 # This program produces a 2D decay chain which is stoped when energy is below min energy
-import matplotlib.pyplot as plt
 import numpy as np
-import math
 import collections
-from astropy.table import Table, Column
-from astropy.table import QTable
+
 
 startE = 1 # the starting enrgy of 0 particle
-MinEnergy = 0.4
-pi = math.pi
+MinEnergy = 0.1 # particle with total energy below this will not continue decaying
 
 Zd = {0: startE}
 Thetad = {0: 0}
@@ -56,9 +52,10 @@ def main():
 		p_component = Pcomponent
 		Thetatemporary = thetaTemp
 	
-		#print (Zd, 'length :', len(Zd))
-		#print (Thetad, 'length :', len(Thetad))
-		print ('momentum', momentum)
+	print ("Total energy",Zd, 'length :', len(Zd))
+	print ("Deflected angle", Thetad, 'length :', len(Thetad))
+	print ('momentum', momentum)
+	print ('')
 """ this function should return the randomly generated Z values in a list according to what n is """
 def get_random_Z (vn):
 	z = []
@@ -86,8 +83,8 @@ def vertexZ (E_percent, Ztemporary):
 def get_random_theta (vn, Ztemp):
 	theta = []
 	while 1:
-		ns = np.random.uniform( 1/((pi/2)+0.1) ,10 )
-		x = np.random.uniform(0, pi/2)
+		ns = np.random.uniform( 1/((np.pi/2)+0.1) ,10 )
+		x = np.random.uniform(0, np.pi/2)
 		f_t = 1/(x + 0.1)
 		if ns < f_t:
 			theta.append (x)
@@ -107,8 +104,8 @@ def vertexTheta1 (theta_list, Ztemp, p_component):
 	Ztemp = collections.OrderedDict(sorted(Ztemp.items()))
 	for k in Ztemp.keys():
 		if k%2 != 0:
-			py1 = Ztemp[k] * math.sin(theta_list[k])
-			px1 = Ztemp[k] * math.cos(theta_list[k])
+			py1 = Ztemp[k] * np.sin(theta_list[k])
+			px1 = Ztemp[k] * np.cos(theta_list[k])
 			p1 = [px1, py1]
 			PP_component[k] = p1
 		elif k%2 == 0:
@@ -129,7 +126,7 @@ def vertexTheta2 (Pcomponent, theta_list, Thetatemporary ):
 			Thetat[k] = theta_list[k] 
 		elif k%2 == 0:
 			Pcomponentxy = Pcomponent[k]
-			theta = math.atan(Pcomponentxy[1]/Pcomponentxy[0])
+			theta = np.arctan(Pcomponentxy[1]/Pcomponentxy[0])
 			Thetat[k] = theta 
 	return Thetat
 main()
