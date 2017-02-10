@@ -2,7 +2,7 @@
 #
 # This program plot out the 3d version of the particle shower
 
-import MC_pregraph3D as mp
+import MC_pregraph3D_ as mp
 import matplotlib.pyplot as plt
 from matplotlib import collections as mc
 import numpy as np
@@ -13,12 +13,9 @@ from mpl_toolkits.mplot3d.art3d import Line3DCollection
 energy = mp.Zd # the total energy generated
 mpt = mp.Thetad # angle of every particle
 line_length = 1.0 # length of trajectory
-Coordinate = {-1:[0,0,0]}
-Coordinate_list = []
-width = [0]  # the line width
-
-print (mpt)
-print ('energy: ',energy)
+Coordinate = {-1:[0,0,0]} # coordinate of each particle without accounting for accumulation from previous particles
+Coordinate_list = []  # coordinates accounting for accumulations
+width = [0]  # the line width in order to vary the line width along decaying process
 
 # calculate x and y corrdinate for each particle assuming a fixed trajectory length and put in a dictionary
 for i, v in mpt.items():
@@ -27,9 +24,7 @@ for i, v in mpt.items():
 	y = line_length * np.sin(v[0]) * np.sin(v[1])
 	x = line_length * np.cos(v[0])
 	Coordinate[i] = [x,y,z]
-
 Coordinate = collections.OrderedDict(sorted(Coordinate.items()))
-print('Coordinate1',Coordinate)
 
 # find the parent particle for each one and generate the new coordinate to be plotted so to string 
 # everything together 
@@ -53,15 +48,13 @@ for w in energy.values():
 	width.append(W)
 
 column = (len(Coordinate_list))/2
-print('coordinate: ', Coordinate)
-print(len(mpt),len(Coordinate))
-print ('Coordinate_list: ', Coordinate_list, 'len: ', column)
+
 
 #arranging the coordinates into the column * 2 * 3 array so it can be used in line collection plotting
 cood= np.array(Coordinate_list)
-coor_array= np.reshape(cood,(column,2,3))
+coor_array= np.reshape(cood,(int(column),2,3))
 
-print(coor_array)
+print("** All final coordinates **\n" , coor_array)
 
 # plotting the arranged array 
 fig = plt.figure()
