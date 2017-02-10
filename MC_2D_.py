@@ -2,20 +2,19 @@
 #
 #This program plots out the 2d version of the particle shower
 
-import MC_pregraph2D as mp
+import MC_pregraph2D_ as mp
 import matplotlib.pyplot as plt
 from matplotlib import collections as mc
 import numpy as np
 import pylab as pl
 import collections
 
-mpt = mp.Thetad
-line_length = 1
-Coordinate = {-1:[0,0]}
-Coordinate_list = []
+mpt = mp.Thetad  # the defledted angle information from MC_pregraph2D_.py
+line_length = 1  # the length of the trajectory
+Coordinate = {-1:[0,0]} # x and y coordinates of each particle without accumulation from the previous particle coordinates
+Coordinate_list = [] # x and y coordinates including accumulation from prrevious particles
 
 
-print (mpt)
 # calculate x and y corrdinate for each particle and put in a dictionary
 for i, v in mpt.items():
 	x = line_length * np.cos(v)
@@ -41,21 +40,16 @@ for i in Coordinate.keys():
 	Coordinate_list.extend([parent_particle,particle_add])
 	
 
-
 column = (len(Coordinate_list))/2
-print('theta: ', mpt)
-print('coordinate: ', Coordinate)
-print(len(mpt),len(Coordinate))
+#print('coordinate: ', Coordinate)
 print ('Coordinate_list: ', Coordinate_list, 'len: ', column)
 
-
-print ('column', column)
+# Plotting part
 cood= np.array(Coordinate_list)
-coor_array= np.reshape(cood,(column,2,2))
-print(coor_array)
+coor_array= np.reshape(cood,(int(column),2,2))
+print("** All final coordinates **\n", coor_array)
 lc = mc.LineCollection(coor_array, linestyles='solid',colors='k', pickradius=5, zorder=2)
 fig, ax = pl.subplots()
-
 ax.add_collection(lc)
 ax.autoscale()
 plt.show()
