@@ -7,7 +7,7 @@ import numpy as np
 import collections
 
 startE = 1 # the starting enrgy of 0 particle
-MinEnergy = 0.4
+MinEnergy = float(input("enter your MinEnergy for 3D version here (> 0 and <1): ")) 
 
 Zd = {0: startE}
 Thetad = {0: [0, 0]}
