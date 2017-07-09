@@ -28,3 +28,10 @@ pip install --no-deps astropy
 
 two data files for 2D and 3D version will be created in your current directory and note that for the 3D
 version, 2 angles are put in one column, first corresponds to thata and the second phi in the spherical coordinate.
+
+# plotting antikt
+it uses ROOT class TLorentzvector
+either gives a single jet or plots out the distribution of number of jets from multiple p_R pair
+
+#jet observable
+plot the distribution of pseudo mass from many parton shower events
