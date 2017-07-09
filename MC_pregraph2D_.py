@@ -7,7 +7,8 @@ import collections
 
 startE = 1 # the starting enrgy of 0 particle
 # particle with total energy below this will not continue decaying
-MinEnergy = float(input("enter your MinEnergy for 2D version here (> 0 and <1): ")) 
+
+MinEnergy=float(input("enter your MinEnergy for 2D version here (> 0 and <1): ")) 
 
 Zd = {0: startE}
 Thetad = {0: 0}
@@ -31,6 +32,7 @@ def main():
 		vn = len(Ztemporary)
 		if not vn:
 			break
+		#print ('Ztemporary', Ztemporary)
 		# get randomly genrated Zs from calling get_random_Z()
 		E_percent = get_random_Z(vn)
 		#print ('E_percent: ',E_percent)
@@ -41,10 +43,13 @@ def main():
 		theta_list = get_random_theta(vn,Ztemp)
 		#print ('theta list', theta_list)
 		#print ('p_component',p_component)
+		#print ('ztemp',Ztemp)
 		Pcomponent = vertexTheta1(theta_list, Ztemp, p_component)
+		#print ('p_component',Pcomponent)
 		# this call should return a complete version of theta which will later be appended to Thetatemporary
 		thetaTemp = vertexTheta2(Pcomponent, theta_list, Thetatemporary)
-
+		#print ('thetaTemp',thetaTemp)
+		#print ('')
 		Zd.update(Ztemp)
 		Thetad.update(thetaTemp)
 		momentum.update(Pcomponent)
@@ -53,10 +58,11 @@ def main():
 		p_component = Pcomponent
 		Thetatemporary = thetaTemp
 	
-	print ("Total energy",Zd, 'length :', len(Zd))
-	print ("Deflected angle", Thetad, 'length :', len(Thetad))
-	print ('momentum', momentum)
-	print ('')
+	'''print ("Total energy",Zd, 'length :', len(Zd))
+				print ("Deflected angle", Thetad, 'length :', len(Thetad))
+				print ('momentum', momentum)
+				print ('')'''
+
 """ this function should return the randomly generated Z values in a list according to what n is """
 def get_random_Z (vn):
 	z = []
@@ -102,8 +108,9 @@ def get_random_theta (vn, Ztemp):
 """ This method is to calculate the x and y momentum component for each particle """
 def vertexTheta1 (theta_list, Ztemp, p_component):
 	PP_component = {}
-	Ztemp = collections.OrderedDict(sorted(Ztemp.items()))
-	for k in Ztemp.keys():
+	Ztempsortedkeys = sorted(list(Ztemp.keys()))
+	# just splitting the energy into x and y since the mass is negligible 
+	for k in Ztempsortedkeys:
 		if k%2 != 0:
 			py1 = Ztemp[k] * np.sin(theta_list[k])
 			px1 = Ztemp[k] * np.cos(theta_list[k])
@@ -122,7 +129,8 @@ def vertexTheta1 (theta_list, Ztemp, p_component):
 # Pcomponent is the same thing as PP_component
 def vertexTheta2 (Pcomponent, theta_list, Thetatemporary ):
 	Thetat = {}
-	for k in Pcomponent.keys():
+	Pcomponentsortedkeys = sorted(list(Pcomponent.keys()))
+	for k in Pcomponentsortedkeys:
 		if k%2 != 0:
 			Thetat[k] = theta_list[k] 
 		elif k%2 == 0:
@@ -130,9 +138,28 @@ def vertexTheta2 (Pcomponent, theta_list, Thetatemporary ):
 			theta = np.arctan(Pcomponentxy[1]/Pcomponentxy[0])
 			Thetat[k] = theta 
 	return Thetat
+
 main()
 
+# printing out the final state particle
+final = []
+for i ,k in momentum.items():
+	k2 = (i*2) + 1 
+	if not k2 in momentum:
+		final.append(i)
+final.sort()
+#print('final',final)
 
+# summing up the momentum components directly from the dictionary
+'''summx = 0
+summy = 0
+for i in final:
+	ppp = momentum[i]
+	summx = summx + ppp[0]
+	summy = summy + ppp[1]
+print ('sum from x momentum', summx)
+print ('sum from y momentum', summy)'''
+		
 
 
 

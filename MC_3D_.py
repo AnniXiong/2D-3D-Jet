@@ -43,10 +43,11 @@ for i in Coordinate.keys():
 	Coordinate_list.extend([parent_particle,particle_add])
 	
 # varying the line width according to the total energy of very particle
+energy = collections.OrderedDict(sorted(energy.items())) # the total energy generated
 for w in energy.values():
 	W = w * 4
 	width.append(W)
-
+print('width', width)
 column = (len(Coordinate_list))/2
 
 

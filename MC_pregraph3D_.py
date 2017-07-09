@@ -7,17 +7,20 @@ import numpy as np
 import collections
 
 startE = 1 # the starting enrgy of 0 particle
-MinEnergy = float(input("enter your MinEnergy for 3D version here (> 0 and <1): ")) 
+#MinEnergy = float(input("enter your MinEnergy for 3D version here (> 0 and <1): ")) 
+MinEnergy = 0.01
+# beam axis in z
 
 Zd = {0: startE}
 Thetad = {0: [0, 0]}
-momentum = {0:[1,0,0]}
+momentum = {0:[0,0,1]}
 
-p_component = {0: [1,0,0]}
+p_component = {0: [0,0,1]}
 Ztemporary = {0: startE}
 Thetatemporary = {0: [0,0]}
 
 def main():
+	global Minenrgy
 	while 1:
 		global Ztemporary
 		global Thetatemporary
@@ -31,6 +34,7 @@ def main():
 		vn = len(Ztemporary)
 		if not vn:
 			break
+		#print ('Ztemporary', Ztemporary)
 		# get randomly genrated Zs from calling get_random_Z()
 		E_percent = get_random_Z(vn)
 		#print ('E_percent: ',E_percent)
@@ -39,14 +43,17 @@ def main():
 		Ztemp = vertexZ(E_percent, Ztemporary)
 		#print ('Ztemp', Ztemp)
 		theta_list = get_random_theta(vn,Ztemp)
-		
-		sec_angle = get_random_phi(vn,Ztemp)
 		#print ('theta list', theta_list)
-		#print ('p_component',p_component)
+		sec_angle = get_random_phi(vn,Ztemp)
+		#print ('sec_angle', sec_angle)
+		#print('p_component', p_component)
+		#print ('----')
 		Pcomponent = vertexTheta1(theta_list, Ztemp, p_component, sec_angle)
+		#print ('Pcomponent',Pcomponent)
 		# this call should return a complete version of theta which will later be appended to Thetatemporary
 		thetaTemp = vertexTheta2(Pcomponent, theta_list, Thetatemporary,sec_angle)
-
+		#print ('thetaTemp', thetaTemp)
+		#print('')
 		Zd.update(Ztemp)
 		Thetad.update(thetaTemp)
 		momentum.update(Pcomponent)
@@ -56,9 +63,10 @@ def main():
 		Thetatemporary = thetaTemp
 	
 		
-	print ("Total energy3d", Zd, 'length :', len(Zd))
-	print ("Theta & phi", Thetad, 'length :', len(Thetad))
-	print('momentum xyz', momentum)
+	'''print ("Total energy3d", Zd, 'length :', len(Zd))
+				print ("Theta & phi", Thetad, 'length :', len(Thetad))
+				print('momentum xyz', momentum)
+				print('Zdd',Zd)'''
 
 """ this function should return the randomly generated Z values in a list according to what n is """
 def get_random_Z (vn):
@@ -103,7 +111,7 @@ def get_random_theta (vn, Ztemp):
 def get_random_phi(vn, Ztemp):
 	phi = []
 	for i in range(vn*2):
-		x = np.random.uniform(0, np.pi/2)
+		x = np.random.uniform(0, 2*np.pi)
 		phi.append(x)
 	keys = sorted(Ztemp.keys())
 	Phi = dict(zip(keys, phi))
@@ -112,15 +120,16 @@ def get_random_phi(vn, Ztemp):
 # theta_list is the randomly generated theta
 # Ztemp : the list of Z for each particle in one layer
 # thetatemporary is the list of complete theta generated last time running the main
-""" This method is to calculate the x and y momentum component for each particle """
+""" This method is to calculate the x, y and z momentum component for each particle """
 def vertexTheta1 (theta_list, Ztemp, p_component, sec_angle):
 	PP_component = {}
-	Ztemp = collections.OrderedDict(sorted(Ztemp.items()))
-	for k in Ztemp.keys():
+	#Ztemp = collections.OrderedDict(sorted(Ztemp.items()))
+	Ztempsortedkeys = sorted(list(Ztemp.keys()))
+	for k in Ztempsortedkeys:
 		if k%2 != 0:
+			px1 = Ztemp[k] * np.sin(theta_list[k]) * np.cos(sec_angle[k])
 			py1 = Ztemp[k] * np.sin(sec_angle[k]) * np.sin(theta_list[k])
-			px1 = Ztemp[k] * np.sin(sec_angle[k]) * np.cos(theta_list[k])
-			pz1 = Ztemp[k] * np.cos(sec_angle[k])
+			pz1 = Ztemp[k] * np.cos(theta_list[k])
 			p1 = [px1, py1, pz1]
 			PP_component[k] = p1
 		elif k%2 == 0:
@@ -137,7 +146,8 @@ def vertexTheta1 (theta_list, Ztemp, p_component, sec_angle):
 # Pcomponent is the same thing as PP_component
 def vertexTheta2 (Pcomponent, theta_list, Thetatemporary, sec_angle):
 	Thetat = {}
-	for k in Pcomponent.keys():
+	Pcomponentsortedkeys = sorted(list(Pcomponent.keys()))
+	for k in Pcomponentsortedkeys:
 		phi = sec_angle[k]
 		if k%2 != 0:
 			theta = theta_list[k]
@@ -149,4 +159,26 @@ def vertexTheta2 (Pcomponent, theta_list, Thetatemporary, sec_angle):
 	return Thetat
 main()
 
+# printing out the final state particle
+final = []
+for i ,k in momentum.items():
+	k2 = (i*2) + 1 
+	if not k2 in momentum:
+		final.append(i)
+final.sort()
+#print('final state particles',final)
+
+# summing up the momentum components directly from the dictionary
+'''summx = 0
+summy = 0
+summz = 0
+print('------momentum sum----------')
+for i in final:
+	ppp = momentum[i]
+	summx = summx + ppp[0]
+	summy = summy + ppp[1]
+	summz = summz + ppp[2]
 	
+print ('sum from x momentum', summx)
+print ('sum from y momentum', summy)
+print ('sum from z momentum', summz)'''

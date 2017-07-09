@@ -14,6 +14,7 @@ line_length = 1  # the length of the trajectory
 Coordinate = {-1:[0,0]} # x and y coordinates of each particle without accumulation from the previous particle coordinates
 Coordinate_list = [] # x and y coordinates including accumulation from prrevious particles
 
+energy = mp.Zd
 
 # calculate x and y corrdinate for each particle and put in a dictionary
 for i, v in mpt.items():
@@ -25,6 +26,7 @@ Coordinate = collections.OrderedDict(sorted(Coordinate.items()))
 print(Coordinate)
 
 # find the parent particle for each one and generate the new coordinate to be plotted so to string everything together 
+#Coordinatesoredkeys = sorted(list(Coordinate.keys()))
 for i in Coordinate.keys():
 	particle = Coordinate[i]
 	#print(particle)
@@ -44,11 +46,19 @@ column = (len(Coordinate_list))/2
 #print('coordinate: ', Coordinate)
 print ('Coordinate_list: ', Coordinate_list, 'len: ', column)
 
+'''energy = collections.OrderedDict(sorted(energy.items()))
+width = []
+for w in energy.values():
+	W = w * 4
+	width.append(W)
+'''
+#print('width',width)
+#print('max width',max(width))
 # Plotting part
 cood= np.array(Coordinate_list)
 coor_array= np.reshape(cood,(int(column),2,2))
 print("** All final coordinates **\n", coor_array)
-lc = mc.LineCollection(coor_array, linestyles='solid',colors='k', pickradius=5, zorder=2)
+lc = mc.LineCollection(coor_array,colors='k',linewidths=0.5)
 fig, ax = pl.subplots()
 ax.add_collection(lc)
 ax.autoscale()
