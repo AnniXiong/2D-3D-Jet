@@ -45,7 +45,6 @@ def main(p, R, final3, t3, mp3, mcs):
     imp.reload(mp3)
     imp.reload(mcs)
     #print('final state particle indices', final3)
-    print('')
     #print('jets',jets,'pr',p,R)
     return jets
 
@@ -76,7 +75,6 @@ def d_calculation(dij ,temp_entity, dib, temp_v,R):
         m = min(kti2p_pair)
         Delta_r = temp_v[p1].DeltaR(temp_v[p2])
         d = m*((Delta_r)**2)/(R**2)
-        # p has to be seperated with two parts here
         dij[p] = d
     
 """ find the smallest among d's and return the index"""
@@ -101,7 +99,7 @@ def deci(dib, dij):
 def merging(i, temp_v, temp_entity, temp_pt, dib, p):  
         index1 = i[0]                           # these are the
         index2 = i[1]                           # two indices to merge
-        v_new = temp_v[index1] + temp_v[index2] # the new four vector
+        v_new = temp_v[index1] + temp_v[index2]     # the new four vector
         # merge the two indices, both tuples
         new_index = index1 + index2
         temp_v[new_index] = v_new

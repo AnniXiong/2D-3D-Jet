@@ -7,8 +7,8 @@ import collections
 
 startE = 1 # the starting enrgy of 0 particle
 # particle with total energy below this will not continue decaying
-
-MinEnergy=float(input("enter your MinEnergy for 2D version here (> 0 and <1): ")) 
+MinEnergy = 0.05
+#MinEnergy=float(input("enter your MinEnergy for 2D version here (> 0 and <1): ")) 
 
 Zd = {0: startE}
 Thetad = {0: 0}

@@ -26,7 +26,6 @@ Coordinate = collections.OrderedDict(sorted(Coordinate.items()))
 print(Coordinate)
 
 # find the parent particle for each one and generate the new coordinate to be plotted so to string everything together 
-#Coordinatesoredkeys = sorted(list(Coordinate.keys()))
 for i in Coordinate.keys():
 	particle = Coordinate[i]
 	#print(particle)
@@ -46,14 +45,6 @@ column = (len(Coordinate_list))/2
 #print('coordinate: ', Coordinate)
 print ('Coordinate_list: ', Coordinate_list, 'len: ', column)
 
-'''energy = collections.OrderedDict(sorted(energy.items()))
-width = []
-for w in energy.values():
-	W = w * 4
-	width.append(W)
-'''
-#print('width',width)
-#print('max width',max(width))
 # Plotting part
 cood= np.array(Coordinate_list)
 coor_array= np.reshape(cood,(int(column),2,2))
