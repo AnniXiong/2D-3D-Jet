@@ -8,7 +8,7 @@ import collections
 
 startE = 1 # the starting enrgy of 0 particle
 #MinEnergy = float(input("enter your MinEnergy for 3D version here (> 0 and <1): ")) 
-MinEnergy = 0.01
+MinEnergy = 0.05
 # beam axis in z
 
 Zd = {0: startE}
