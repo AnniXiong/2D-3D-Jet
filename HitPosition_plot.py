@@ -42,4 +42,9 @@ ax.hlines(0, -50, 50, color='r', linewidth=2)
 #fig.tight_layout() 
 print ('screen_hit',screen_hit)
 #plt.show()
+<<<<<<< HEAD
 plt.savefig('screen_hit_position.png')
+=======
+plt.savefig('screen_hit_position.png')
+
+>>>>>>> 3d1ebcfd27685acc0b66e09493a738730a303154
