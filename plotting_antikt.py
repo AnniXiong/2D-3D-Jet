@@ -19,11 +19,12 @@ def pr_plotting(jetnumber,c):
         y = k[0]
         number = jetnumber[k]
         colors = random.choice(c)
-        plt.text(x, y, str(number) , color = colors  ,fontsize = '10')
+        plt.text(x, y, str(number) , color = colors  ,fontsize = '11')
     plt.xlabel('R value')
     plt.ylabel('p value')
     plt.title('Number of jets, Min_energy:'+ str(mp3.MinEnergy))
-    plt.show()
+    plt.savefig('jet_number_distribution.png')
+    #plt.show()
 
 def plot_single_event(angular_v, jet,c):
     fig,ax = plt.subplots(1,1)   
@@ -45,7 +46,8 @@ def plot_single_event(angular_v, jet,c):
     plt.xlabel('eta')
     plt.ylabel('phi')
     plt.title('Jet Distribution')
-    plt.show()
+    
+    #plt.show()
     
 # the part respnsible for the interactive mode
 print('choose s to see jets from one event, choose m to see distribution of #jets')
@@ -81,4 +83,6 @@ elif a1 == 's':
     print(jet)
     angular_v = ak.v_ang
     #plot_single_event(angular_v, jet,c)
+
+
 
