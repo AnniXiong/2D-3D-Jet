@@ -1,6 +1,6 @@
 # this program is to plot the number of jets per event with the 15 different pairs of p and R
 # Anni Xiong
-%matplotlib inline
+#%matplotlib inline
 import MC_pregraph3D_ as mp3
 import MC_3d_saving_ as mcs
 import antikt as ak
@@ -78,6 +78,7 @@ elif a1 == 's':
     final3 = mcs.final3
     t3 = mcs.t3
     jet = ak.main(a1R, a1p, final3, t3, mp3, mcs) 
+    print(jet)
     angular_v = ak.v_ang
-    plot_single_event(angular_v, jet,c)
+    #plot_single_event(angular_v, jet,c)
 
