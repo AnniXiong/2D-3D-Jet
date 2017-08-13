@@ -4,7 +4,9 @@ Minimum energy can be adjusted to influence the number of partons been produced
 
 # Indexing:
 particle indexing is in the follwing manner:
+
 '''  
+    
     / 3 ...
    1
   / \ 4 ...
@@ -12,7 +14,9 @@ particle indexing is in the follwing manner:
   \ / 5 ...
    2
     \ 6 ...
+
 '''
+
 so that every particle index times 2 then plus 1 or 2 will give the index of its daughter particle
 
 # Assumptions:
@@ -35,7 +39,7 @@ The module that performs antikt clusttering algorithm for final state partons fo
 
 Equations used for defining angular distance between two pseudo jets
 
-
+![angular distance](https://github.com/AnniXiong/2D-3D-Jet/edit/master/equations.png)
 
 TLorentzVector from ROOT is used in this program
 
