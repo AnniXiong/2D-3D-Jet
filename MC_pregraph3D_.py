@@ -1,59 +1,33 @@
 # Anni Xiong
 #
-# This program produces a 3D decay chain which is stopped when energy is below min energy
-
-import matplotlib.pyplot as plt
+# This program produces the data related to a 3d parton shower
+# beam axis in z
 import numpy as np
-import collections
 
 startE = 1 # the starting enrgy of 0 particle
-#MinEnergy = float(input("enter your MinEnergy for 3D version here (> 0 and <1): ")) 
-MinEnergy = 0.05
-# beam axis in z
-
 Zd = {0: startE}
 Thetad = {0: [0, 0]}
 momentum = {0:[0,0,1]}
 
-p_component = {0: [0,0,1]}
-Ztemporary = {0: startE}
-Thetatemporary = {0: [0,0]}
-
-def main():
-	global Minenrgy
+def main(MinEnergy):
+	p_component = {0: [0,0,1]}
+	Ztemporary = {0: startE}
+	Thetatemporary = {0: [0,0]}
 	while 1:
-		global Ztemporary
-		global Thetatemporary
-		global p_component
-		# at this point, you should have a complete dictionary of Z values at disposal
-		# checking if each vertex has enough energy to go on
-		#print ('Ztemporary', Ztemporary)
-		for k, v in list(Ztemporary.items()):
+		for k, v in list(Ztemporary.items()):		# check if each vertex has enough energy to split 
 			if v < MinEnergy:
 				del Ztemporary[k]
 		vn = len(Ztemporary)
 		if not vn:
 			break
-		#print ('Ztemporary', Ztemporary)
-		# get randomly genrated Zs from calling get_random_Z()
-		E_percent = get_random_Z(vn)
-		#print ('E_percent: ',E_percent)
 		
-		# get the other half of Z from calculation and index them
-		Ztemp = vertexZ(E_percent, Ztemporary)
-		#print ('Ztemp', Ztemp)
+		E_percent = get_random_Z(vn)
+		Ztemp = vertexZ(E_percent, Ztemporary)                                      # calculate 2nd Z
 		theta_list = get_random_theta(vn,Ztemp)
-		#print ('theta list', theta_list)
-		sec_angle = get_random_phi(vn,Ztemp)
-		#print ('sec_angle', sec_angle)
-		#print('p_component', p_component)
-		#print ('----')
-		Pcomponent = vertexTheta1(theta_list, Ztemp, p_component, sec_angle)
-		#print ('Pcomponent',Pcomponent)
-		# this call should return a complete version of theta which will later be appended to Thetatemporary
-		thetaTemp = vertexTheta2(Pcomponent, theta_list, Thetatemporary,sec_angle)
-		#print ('thetaTemp', thetaTemp)
-		#print('')
+		sec_angle = get_random_phi(vn,Ztemp)									    # geneate phi for 3d
+		Pcomponent = vertexTheta1(theta_list, Ztemp, p_component, sec_angle)        # geneate (px, py, pz)
+		thetaTemp = vertexTheta2(Pcomponent, theta_list, Thetatemporary,sec_angle)  # [index: theta,phi]
+		
 		Zd.update(Ztemp)
 		Thetad.update(thetaTemp)
 		momentum.update(Pcomponent)
@@ -62,8 +36,7 @@ def main():
 		p_component = Pcomponent
 		Thetatemporary = thetaTemp
 	
-		
-	'''print ("Total energy3d", Zd, 'length :', len(Zd))
+		'''print ("Total energy3d", Zd, 'length :', len(Zd))
 				print ("Theta & phi", Thetad, 'length :', len(Thetad))
 				print('momentum xyz', momentum)
 				print('Zdd',Zd)'''
@@ -82,8 +55,6 @@ def get_random_Z (vn):
 	return z
 
 """ this function should return the Ztemporary dictionary for each layer of decay """
-# E_percent/z is the list of newly generated random Z and Ztemporary contains the parent information
-# Zt here is a temporary place holder which represents the list of Z information gnerated everytime the main while loop runs
 def vertexZ (E_percent, Ztemporary):
 	Zt = {}
 	for i, k in enumerate(Ztemporary.keys()):
@@ -117,13 +88,9 @@ def get_random_phi(vn, Ztemp):
 	Phi = dict(zip(keys, phi))
 	return Phi
 
-# theta_list is the randomly generated theta
-# Ztemp : the list of Z for each particle in one layer
-# thetatemporary is the list of complete theta generated last time running the main
 """ This method is to calculate the x, y and z momentum component for each particle """
 def vertexTheta1 (theta_list, Ztemp, p_component, sec_angle):
 	PP_component = {}
-	#Ztemp = collections.OrderedDict(sorted(Ztemp.items()))
 	Ztempsortedkeys = sorted(list(Ztemp.keys()))
 	for k in Ztempsortedkeys:
 		if k%2 != 0:
@@ -143,7 +110,7 @@ def vertexTheta1 (theta_list, Ztemp, p_component, sec_angle):
 	return PP_component
 
 """This method is to calculate the angle of the even numbered particle according to the odd numbered particle"""
-# Pcomponent is the same thing as PP_component
+# Pcomponent = PP_component
 def vertexTheta2 (Pcomponent, theta_list, Thetatemporary, sec_angle):
 	Thetat = {}
 	Pcomponentsortedkeys = sorted(list(Pcomponent.keys()))
@@ -157,9 +124,9 @@ def vertexTheta2 (Pcomponent, theta_list, Thetatemporary, sec_angle):
 			Thetat[k] = theta 
 		Thetat[k] = [theta,phi]
 	return Thetat
-main()
 
-# printing out the final state particle
+#main(0.1)
+'''# printing out the final state particle
 final = []
 for i ,k in momentum.items():
 	k2 = (i*2) + 1 
@@ -169,7 +136,7 @@ final.sort()
 #print('final state particles',final)
 
 # summing up the momentum components directly from the dictionary
-'''summx = 0
+summx = 0
 summy = 0
 summz = 0
 print('------momentum sum----------')

@@ -1,4 +1,4 @@
- # This program is to run the anti Kt algorithum, the goal is to get a list of jets
+# This program is to run the anti Kt algorithum, the goal is to get a list of jets
 # the beam direction is in Z
 # Anni Xiong
 import MC_pregraph3D_ as mp3
@@ -8,19 +8,19 @@ from ROOT import TLorentzVector
 import itertools 
 import importlib as imp # import the little monster
 
-final3 = mcs.final3
-t3 = mcs.t3
 v = {}
 v_ang = {}
-
+pt = {}
 def main(p, R, final3, t3, mp3, mcs):
+    
     global v
     global v_ang
+    global pt
     pt = {}
     packing(final3,t3,v, pt,v_ang)
     
     jets = []
-    temp_entity = final3.copy()     #   Here making a copy so that 
+    temp_entity = final3.copy()     #  making a copy so that 
     temp_v = v.copy()               # final3, v and pt are not
     temp_pt = pt.copy()             # modified along the way
     dij = {}                        # These two will be constantly updated,

@@ -6,16 +6,19 @@
 import MC_pregraph3D_ as mp3
 from astropy.table import Table, Column, QTable
 import numpy as np
+Minenergy = 0.04
 
+final3 = []
+t3 = QTable()
+mp3.main(Minenergy)
 # extracting data from 2 pregraghes
 energy3d = mp3.Zd
 
-min_energy3d = mp3.MinEnergy
+min_energy3d = Minenergy
 angle3d = mp3.Thetad
 momentum3d = mp3.momentum
 
 #creating seperate lists for momentum by x, y, (z) components
-final3 = []
 nonfinal3_table_index = []
 
 # 3d table data
@@ -62,7 +65,7 @@ for i, k in enumerate(t3['index']):
 	else:
 		nonfinal3_table_index.append(i)
 final3.sort()
-# 3D removing the rows that don't belong to final state particles
+# removing the rows that don't belong to final state particles
 t3.remove_rows(nonfinal3_table_index)
 #print('nonfinal3_table_index', nonfinal3_table_index)
 
@@ -74,4 +77,5 @@ datafile3 .close()
 
 #print(final3)
 #print(type(final3[10]))
-								
+#main(minenergy)
+							

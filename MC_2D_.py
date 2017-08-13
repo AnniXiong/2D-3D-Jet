@@ -7,13 +7,15 @@ import matplotlib.pyplot as plt
 from matplotlib import collections as mc
 import numpy as np
 import pylab as pl
-import collections
 
-mpt = mp.Thetad  # the defledted angle information from MC_pregraph2D_.py
-line_length = 1  # the length of the trajectory
-Coordinate = {-1:[0,0]} # x and y coordinates of each particle without accumulation from the previous particle coordinates
-Coordinate_list = [] # x and y coordinates including accumulation from prrevious particles
+Minenergy = 0.01
 
+mp.main(Minenergy)
+mpt = mp.Thetad              # theta from mc_2d pregraph
+
+line_length = 1              # decay length
+Coordinate = {-1:[0,0]}      # x and y coordinates of each particle without accumulation from the previous ones
+Coordinate_list = []         # x and y coordinates including accumulation from prrevious particles
 energy = mp.Zd
 
 # calculate x and y corrdinate for each particle and put in a dictionary
@@ -22,13 +24,10 @@ for i, v in mpt.items():
 	y = line_length * np.sin(v)
 	Coordinate[i] = [x,y]
 
-Coordinate = collections.OrderedDict(sorted(Coordinate.items()))
-print(Coordinate)
-
-# find the parent particle for each one and generate the new coordinate to be plotted so to string everything together 
-for i in Coordinate.keys():
+# find the parent particle for each one and generate the new coordinate
+sorted_coordinate_key = sorted(list(Coordinate.keys()))
+for i in sorted_coordinate_key:
 	particle = Coordinate[i]
-	#print(particle)
 	if i == -1:
 		parent_particle = [0, 0]
 	elif i%2 == 0:
@@ -41,16 +40,14 @@ for i in Coordinate.keys():
 	Coordinate_list.extend([parent_particle,particle_add])
 	
 
-column = (len(Coordinate_list))/2
-#print('coordinate: ', Coordinate)
-print ('Coordinate_list: ', Coordinate_list, 'len: ', column)
-
 # Plotting part
+column = (len(Coordinate_list))/2
 cood= np.array(Coordinate_list)
 coor_array= np.reshape(cood,(int(column),2,2))
-print("** All final coordinates **\n", coor_array)
+#print("** All final coordinates **\n", coor_array)
 lc = mc.LineCollection(coor_array,colors='k',linewidths=0.5)
 fig, ax = pl.subplots()
 ax.add_collection(lc)
+ax.set_title('2d parton shower' + ', energy threshold' + str(Minenergy))
 ax.autoscale()
 plt.show()
