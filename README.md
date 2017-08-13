@@ -5,18 +5,14 @@ Minimum energy can be adjusted to influence the number of partons been produced
 # Indexing:
 particle indexing is in the follwing manner:
 
-'''  
-    
-    / 3 ...
-   1
-  / \ 4 ...
- 0  
-  \ / 5 ...
-   2
-    \ 6 ...
-
-'''
-
+       / 3 ...
+      1
+     / \ 4 ...
+    0  
+     \ / 5 ...
+      2
+       \ 6 ...
+   
 so that every particle index times 2 then plus 1 or 2 will give the index of its daughter particle
 
 # Assumptions:
@@ -27,7 +23,7 @@ so that every particle index times 2 then plus 1 or 2 will give the index of its
 # Saving part
 In the MC_saving.py, make sure that you have installed astropy package in order for it to work, here is a quick way to install it
 
-pip install --no-deps astropy
+    pip install --no-deps astropy
 
 two data files for 2D and 3D version will be created in your current directory and note that for the 3D
 version, 2 angles are put in one column, first corresponds to thata and the second phi in the spherical coordinate.
@@ -39,7 +35,7 @@ The module that performs antikt clusttering algorithm for final state partons fo
 
 Equations used for defining angular distance between two pseudo jets
 
-![angular distance](https://github.com/AnniXiong/2D-3D-Jet/edit/master/equations.png)
+(https://github.com/AnniXiong/2D-3D-Jet/blob/master/equations.png)
 
 TLorentzVector from ROOT is used in this program
 
