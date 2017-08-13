@@ -4,15 +4,15 @@ Minimum energy can be adjusted to influence the number of partons been produced
 
 # Indexing:
 particle indexing is in the follwing manner:
-  
->    / 3 ...
->   1
->  / \ 4 ...
-> 0  
->  \ / 5 ...
->   2
->    \ 6 ...
-
+'''  
+    / 3 ...
+   1
+  / \ 4 ...
+ 0  
+  \ / 5 ...
+   2
+    \ 6 ...
+'''
 so that every particle index times 2 then plus 1 or 2 will give the index of its daughter particle
 
 # Assumptions:
@@ -31,15 +31,11 @@ version, 2 angles are put in one column, first corresponds to thata and the seco
 # antikt
 The module that performs antikt clusttering algorithm for final state partons following this reference
 
-(https://arxiv.org/abs/0802.1189)
+[antikt clusttering algorithm](https://arxiv.org/abs/0802.1189)
 
 Equations used for defining angular distance between two pseudo jets
 
->\begin{align}
->d_{ij} & = \min(k_{ti}^{2p},k_{tj}^{2p})\frac{\Delta_{ij}^2}{R^2}\\
->d_{iB} & = K_{ti}^{2p}\\
->\Delta_{ti}^{2} & = (y_i-y_j)^2+(\phi_i-\phi_j)^2
->\end{align}
+
 
 TLorentzVector from ROOT is used in this program
 
