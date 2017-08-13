@@ -30,14 +30,9 @@ version, 2 angles are put in one column, first corresponds to thata and the seco
 
 # antikt
 The module that performs antikt clusttering algorithm for final state partons following this reference
-
 [antikt clusttering algorithm](https://arxiv.org/abs/0802.1189)
 
-Equations used for defining angular distance between two pseudo jets
-
-(https://github.com/AnniXiong/2D-3D-Jet/blob/master/equations.png)
-
-TLorentzVector from ROOT is used in this program
+TLorentzVector from ROOT is used in this progra
 
 # Hit position
 plots where partons might hit on the detector assuming a 2D flat screen
